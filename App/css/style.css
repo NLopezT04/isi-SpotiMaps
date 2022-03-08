@@ -17,7 +17,6 @@ body,
     flex-direction: column;
     min-width: 400px;
     max-width: 400px;
-    margin-top: 50%;
 }
 
 .status {
@@ -28,4 +27,3 @@ body,
 #my-map {
   flex: 1;
 }
-
