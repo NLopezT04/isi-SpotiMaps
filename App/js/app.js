@@ -1,12 +1,13 @@
+////                    TODAS LAS KEYS DE LAS API AQUI              ////
+
+// API Key de Geoapify
+const APIKeyGeoapify = "d5330827859048f681ef686e40bf151b";
+
+
+////                              CODIGO MAPA                       ////
+
 // Crear mapa Leaflet
 const map = L.map('my-map').setView([48.1500327, 11.5753989], 2);
-
-// Marcador para geolocaclización inversa
-let marker;
-
-////                    TODAS LAS KEYS DE LAS API AQUI
-// API Key de Geoapify
-const APIKeyGeoapify = "AÑADIR AQUI TU CLAVE DE GEOAPIFY";
 
 // Retina requerida para añadir los titulos al mapa
 const isRetina = L.Browser.retina;
@@ -15,7 +16,6 @@ const retinaUrl = "https://maps.geoapify.com/v1/tile/osm-bright/{z}/{x}/{y}@2x.p
 
 // Añadir capa del mapa. Colocar en 15 el maximo del zoom.
 L.tileLayer(isRetina ? retinaUrl : baseUrl, {
-  attribution: '<a href="https://openmaptiles.org/" target="_blank">© OpenMapTiles</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap</a> contributors',
   apiKey: APIKeyGeoapify,
   maxZoom: 15,
   id: 'osm-bright',
@@ -26,6 +26,15 @@ map.zoomControl.remove();
 L.control.zoom({
   position: 'topright'
 }).addTo(map);
+
+// Marcador para geolocaclización inversa
+const markerIcon = L.icon({
+  iconUrl: `https://api.geoapify.com/v1/icon/?type=awesome&color=%23009a0e&icon=music&apiKey=${APIKeyGeoapify}`,
+  iconSize: [31, 46], 
+  iconAnchor: [15.5, 42],
+});
+
+let marker ;
 
 //Función al detectar un click en el mapa
 function onMapClick(e) {
@@ -55,7 +64,11 @@ function onMapClick(e) {
 
       document.getElementById("status").textContent = `Dirección encontrada: ${foundAddress.properties.formatted}`;
 
-      marker = L.marker(new L.LatLng(foundAddress.properties.lat, foundAddress.properties.lon)).addTo(map);
+      //Crear marcador en el lugar donde se ha hecho click
+      marker = L.marker(new L.LatLng(foundAddress.properties.lat, foundAddress.properties.lon),{
+        icon:markerIcon
+      }).addTo(map);
+
     });
 
 }
