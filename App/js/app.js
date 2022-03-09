@@ -1,13 +1,13 @@
 ////                    TODAS LAS KEYS DE LAS API AQUI              ////
 
 // API Key de Geoapify
-const APIKeyGeoapify = "d5330827859048f681ef686e40bf151b";
+const APIKeyGeoapify = "INTRODUCIR API KEY DE GEOAPIFY AQUI";
 
 
 ////                              CODIGO MAPA                       ////
 
 // Crear mapa Leaflet
-const map = L.map('my-map').setView([48.1500327, 11.5753989], 2);
+const map = L.map('my-map').setView([48.1500327, 11.5753989], 3);
 
 // Retina requerida para añadir los titulos al mapa
 const isRetina = L.Browser.retina;
@@ -62,7 +62,7 @@ function onMapClick(e) {
       document.getElementById("state").value = foundAddress.properties.state || '';
       document.getElementById("country").value = foundAddress.properties.country || '';
 
-      document.getElementById("status").textContent = `Dirección encontrada: ${foundAddress.properties.formatted}`;
+      document.getElementById("status").textContent = `Dirección encontrada: ${foundAddress.properties.country}`;
 
       //Crear marcador en el lugar donde se ha hecho click
       marker = L.marker(new L.LatLng(foundAddress.properties.lat, foundAddress.properties.lon),{

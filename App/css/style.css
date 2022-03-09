@@ -17,15 +17,58 @@ body,
     flex-direction: column;
     min-width: 400px;
     max-width: 400px;
-    margin-top: 50%;
+}
+.results2 {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  min-width: 400px;
+  max-width: 400px;
+  margin-top: 400px;
 }
 
 .status {
     padding: 10px;
     max-width: 400px;
+    margin-left: 10px;
 }
 
 #my-map {
   flex: 1;
 }
 
+.btn {
+  background-image: linear-gradient(to right, #006175 0%, #00a950 100%);
+  border-radius: 40px;
+  color: #00a84f;
+  display: flex;
+  height: 60px;
+  width: 200px;
+  margin-left: 100px;
+  margin-top: 20px;
+  font-size: 1.4em;
+  padding: 4px;
+  position: absolute;
+  text-align: center;
+  text-decoration: none;
+  z-index: 2;
+}
+
+.btn:hover {
+  color: #fff;
+}
+
+.btn .btnspan {
+  align-items: center;
+  background: #0e0e10;
+  border-radius: 40px;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  transition: background 0.5s ease;
+  width: 100%;
+}
+
+.btn:hover .btnspan {
+  background: transparent;
+}

@@ -18,9 +18,10 @@
      }
     </style>
 </head>
-<body>
+<body style="background-color:lightgreen;">
   <div class="main">
     <div class="controls">
+      <img id="wheel" src="img/LOGO.png" width="400" height="400">
       <div class="results">
             <label for="name">Nombre:</label>          
             <input id="name" type="text" readonly />
@@ -36,13 +37,13 @@
             <input id="state" type="text" readonly />
             <label for="country">País:</label>          
             <input id="country" type="text" readonly />
+            <span id="status">Selecciona el país de destino</span>
       </div>
-      <div class="status">
-        <span id="status">Selcciona el país de destino</span>
-      </div>
- 
+
+      <a class="btn" href="http://127.0.0.1:5500/isi-SpotiMaps/App/conciertos.html" ><span class="btnspan">Obtener conciertos</span></a>
     </div>
     <div id="my-map"></div>
+    
     
   </div>
 
