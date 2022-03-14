@@ -8,7 +8,7 @@ La información relacionada con el Sprint 1 se encuentra en el siguiente enlace
 
 [Repositorio Sprint 1](https://github.com/NLopezT04/isi-SpotiMaps/tree/Sprint1)
 
-## Sprint 2 (En proceso)
+## Sprint 2
 [Repositorio Sprint 2](https://github.com/NLopezT04/isi-SpotiMaps/tree/Sprint2)
 
 ## Sprint 3 (En proceso)
