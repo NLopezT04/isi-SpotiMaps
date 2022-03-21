@@ -2,6 +2,7 @@ import requests
 import base64
 import pandas as pd
 import math
+import sys
 
 def spotify(client_id,client_secret , str_artist):
     token = get_token(client_id,client_secret)
@@ -91,6 +92,8 @@ if __name__ == "__main__":
     client_id = '5b958756724b469ba722bff8f1ffa180'
     client_secret = 'e025198df42346a89534bde0b03c6d68'
     artist = input("Artista: ")
+        #artist = input("Artista: ")
+    artist = sys.argv[1]
     spotify(client_id, client_secret, artist)
 
 

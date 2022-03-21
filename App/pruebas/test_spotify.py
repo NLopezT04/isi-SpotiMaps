@@ -4,6 +4,11 @@ import pandas as pd
 import math
 import sys
 
+# Se requiere la instalación de las siguietnes librerias
+# pip install requests
+# pip install pandas
+# Se ejecuta : .\test_spotify.py
+
 def spotify(client_id,client_secret , str_artist):
     token = get_token(client_id,client_secret)
     header = {'Authorization': f'Bearer {token}'};
