@@ -1,8 +1,8 @@
 ////                    TODAS LAS KEYS DE LAS API AQUI              ////
 
 // API Key de Geoapify
-const APIKeyGeoapify = "INTRODUCIR API KEY DE GEOAPIFY AQUI";
-
+const APIKeyGeoapify = "INTRUDUCIR AQUI API";
+const APIKeyTicketMaster = "INTRUDUCIR AQUI API";
 
 ////                              CODIGO MAPA                       ////
 
@@ -61,14 +61,32 @@ function onMapClick(e) {
       document.getElementById("city").value = foundAddress.properties.city || '';
       document.getElementById("state").value = foundAddress.properties.state || '';
       document.getElementById("country").value = foundAddress.properties.country || '';
+      document.getElementById("latlng").value =  foundAddress.properties.lat+ ","+ foundAddress.properties.lon;;
 
       document.getElementById("status").textContent = `Dirección encontrada: ${foundAddress.properties.country}`;
-
       //Crear marcador en el lugar donde se ha hecho click
       marker = L.marker(new L.LatLng(foundAddress.properties.lat, foundAddress.properties.lon),{
         icon:markerIcon
       }).addTo(map);
 
+      ticketMaster(foundAddress.properties.lat+ ","+ foundAddress.properties.lon);
+
+    });
+
+}
+
+
+
+function ticketMaster(latlongG){
+  categoria= 'Music'
+  url="https://app.ticketmaster.com/discovery/v2/events.json?apikey="+APIKeyTicketMaster+"&classificationName=Music&latlong="+latlongG,
+  fetch(url).then(result => result.json())
+    .then(featureCollection => {
+      console.log(featureCollection);
+      for(var i=0; i<featureCollection.page.size; i++) {
+        elementid= "attractionsName"+i;
+        document.getElementById(elementid).value = featureCollection._embedded.events[0].name || '';
+      }      
     });
 
 }
