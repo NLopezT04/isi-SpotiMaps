@@ -1,8 +1,8 @@
 ////                    TODAS LAS KEYS DE LAS API AQUI              ////
 
 // API Key de Geoapify
-const APIKeyGeoapify = "INTRUDUCIR AQUI API";
-const APIKeyTicketMaster = "INTRUDUCIR AQUI API";
+const APIKeyGeoapify = "0b8dffcbecc84716ab11d5ac53f8caf5";
+const APIKeyTicketMaster = "NVOQ1LlrFNB0eQ42mesPgp9sBydEnbay";
 
 ////                              CODIGO MAPA                       ////
 
