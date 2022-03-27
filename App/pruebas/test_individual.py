@@ -4,10 +4,11 @@ import pandas as pd
 import math
 import sys
 
-# Se requiere la instalación de las siguietnes librerias
+# Se requiere la instalación de las siguietnes librerias:
 # pip install requests
 # pip install pandas
-# Se ejecuta : .\test_spotify.py
+# Comprobar tener permisos de ejecución
+# Se ejecuta : python3 test_spotify.py
 
 def spotify(client_id,client_secret , str_artist):
     token = get_token(client_id,client_secret)
@@ -93,12 +94,47 @@ def get_token(client_id,client_secret):
     token = p.json()['access_token']
     return token
 
+def geoapify():
+    url = "https://geoapify-platform.p.rapidapi.com/v1/geocode/reverse"
+
+    querystring = {"apiKey":"0b8dffcbecc84716ab11d5ac53f8caf5","lon":"-74.0445","lat":"40.68922","lang":"en","limit":"1"}
+
+    headers = {
+	    "X-RapidAPI-Host": "geoapify-platform.p.rapidapi.com",
+    	"X-RapidAPI-Key": "6acf691c34mshb3d77ba0325f211p163cd2jsn26be24d53894"
+    }
+
+    response = requests.request("GET", url, headers=headers, params=querystring)
+
+    print(response.text)
+
+def ticketmaster():
+    events_url = f'https://app.ticketmaster.com/discovery/v2/events.json'
+    response = requests.get(events_url, params={
+        'countryCode': 'ES',
+        'classificationName': 'Musician',
+        'page': '1',
+        'apikey': 'NVOQ1LlrFNB0eQ42mesPgp9sBydEnbay'
+    })
+
+    json = response.json()
+    if '_embedded' in json:
+        return response.json()['_embedded']['events']
+    else:
+        return []
+
 if __name__ == "__main__":
     client_id = '5b958756724b469ba722bff8f1ffa180'
     client_secret = 'e025198df42346a89534bde0b03c6d68'
-    #artist = input("Artista: ")
     artist = "Parkineos"
+    print('Test Spotify: \n')
     spotify(client_id, client_secret, artist)
+    print('\n\n\n\n\nTest Geoapify: \n')    
+    geoapify()
+    print('\n\n\n\n\nTest Ticketmaster: \n')
+    events = ticketmaster()
+    print(events)
+    
 
 
 
