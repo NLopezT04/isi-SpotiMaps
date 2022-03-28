@@ -84,8 +84,8 @@ function ticketMaster(latlongG){
     .then(featureCollection => {
       console.log(featureCollection);
       for(var i=0; i<featureCollection.page.size; i++) {
-        elementid= "attractionsName"+i;
-        document.getElementById(elementid).value = featureCollection._embedded.events[0].name || '';
+        elementid= "Concierto"+i;
+        document.getElementById(elementid).value = featureCollection._embedded.events[i].name || '';
       }      
     });
 
