@@ -86,7 +86,15 @@ function onMapClick(e) {
     console.log(url);
 }*/
 
+let ticketMasterMarker = [];
+
 function ticketMaster(latlongG) {
+
+    for(var i=0; i<ticketMasterMarker.length; i++){
+        ticketMasterMarker[i].remove();
+
+    }
+    
     categoria = 'Music'
     url = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=" + APIKeyTicketMaster + "&classificationName=Music&latlong=" + latlongG,
         fetch(url).then(result => result.json())
@@ -102,7 +110,7 @@ function ticketMaster(latlongG) {
                 //url(grupo);
 
                 const zooMarkerPopup = L.popup().setContent(grupo + "<br>" + calle + ", " + ciudad + "<br>" + "Fecha: " + fecha + " | Hora: " + hora);
-                conciertos = L.marker(new L.LatLng((featureCollection._embedded.events[i]._embedded.venues[0].location.latitude || ''), (featureCollection._embedded.events[i]._embedded.venues[0].location.longitude || '')), {
+                ticketMasterMarker[i] = L.marker(new L.LatLng((featureCollection._embedded.events[i]._embedded.venues[0].location.latitude || ''), (featureCollection._embedded.events[i]._embedded.venues[0].location.longitude || '')), {
                     icon: concertsIcon
                 }).bindPopup(zooMarkerPopup).addTo(map);
             }
