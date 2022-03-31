@@ -81,9 +81,9 @@ if __name__ == "__main__":
 
     print('\n\n\n\n\nTest 1 España: \n')
     geoapify(-3.5268824, 39.946262)
+    
+    #print('\n\n\n\n\nTest 2 Reino unido: \n')
+    #geoapify(-1.3898056, 52.4885148)
 
-    print('\n\n\n\n\nTest 2 Reino unido: \n')
-    geoapify(-1.3898056, 52.4885148)
-
-    print('\n\n\n\n\nTest 3 Italia: \n')
-    geoapify(9.525267, 51.628687)
+    #print('\n\n\n\n\nTest 3 Italia: \n')
+    #geoapify(9.525267, 51.628687)
