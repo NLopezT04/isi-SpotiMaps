@@ -126,7 +126,7 @@ function ticketMasterPorPais(CodigoPais) {
                 //console.log(urlPlaylist)
                 
                 const urlPlaylist=conseguirURL();
-                console.log(urlPlaylist)
+                console.log(urlPlaylist);
 
 
                 const zooMarkerPopup = L.popup().setContent(grupo + "<br>" + ciudad + "<br>" + "Fecha: " + fecha + " | Hora: " + hora+ "<br>" + '<a href="'+urlEntradas+'" target=\"_blank\">Entradas concierto</a>'+ "<br>" + '<a href="'+urlEntradas+'" target=\"_blank\">Playlist Spotify</a>');
@@ -180,15 +180,14 @@ function tests(){
         body: 'grant_type=client_credentials'
     }).then(res=>res.json()).then(rs=> {
         token = rs.access_token;
-        console.log(token);
         return token;
     });
 }
 //Conseguir URL Playlist
 function conseguirURL(){
-    //const token = conseguirToken().then(response => response.access_token);
     
-    //token = tests();
+    const token = tests();
+    /*
     const token= '';
     fetch('https://accounts.spotify.com/api/token', {
             method: 'POST',
@@ -201,12 +200,17 @@ function conseguirURL(){
             token = rs.access_token;
             console.log(rs.access_token);
         })
+        */
     
     fetch("https://api.spotify.com/v1/search?q="+grupo+"&type=playlist&offset=0&limit=20", {
         method: 'GET',
         headers: {'Authorization' : 'Bearer ' + token}
     })
-    .then(result=>result.json()).then(dataSpotify => console.log(dataSpotify.playlists.items[0].external_urls.spotify))
+    .then(result=>result.json()).then(dataSpotify => {
+        concierto = dataSpotify.playlists.items[0].external_urls.spotify;
+        console.log(concierto);
+        return concierto;
+    })
 }
 
 
