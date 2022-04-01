@@ -105,8 +105,8 @@ function ticketMasterPorPais(CodigoPais) {
                 hora = featureCollection._embedded.events[i].dates.start.localTime || '';
                 urlEntradas = featureCollection._embedded.events[i].url
                 
-                const token = conseguirToken();
-                console.log(token);
+                //const token = conseguirToken().then(response => response.access_token);
+                
                 /*
                 fetch("https://api.spotify.com/v1/search?q="+grupo+"&type=playlist&offset=0&limit=20", {
                     method: 'GET',
@@ -125,8 +125,8 @@ function ticketMasterPorPais(CodigoPais) {
 */
                 //console.log(urlPlaylist)
                 
-                //const urlPlaylist=conseguirURL();
-                //console.log(urlPlaylist)
+                const urlPlaylist=conseguirURL();
+                console.log(urlPlaylist)
 
 
                 const zooMarkerPopup = L.popup().setContent(grupo + "<br>" + ciudad + "<br>" + "Fecha: " + fecha + " | Hora: " + hora+ "<br>" + '<a href="'+urlEntradas+'" target=\"_blank\">Entradas concierto</a>'+ "<br>" + '<a href="'+urlEntradas+'" target=\"_blank\">Playlist Spotify</a>');
@@ -138,7 +138,7 @@ function ticketMasterPorPais(CodigoPais) {
 }
 
 // Conseguir token spotify para las busquedas
-function conseguirToken(){
+function conseguirToken2(){
     let token;
      fetch('https://accounts.spotify.com/api/token', {
         method: 'POST',
@@ -152,16 +152,62 @@ function conseguirToken(){
     return token;
 }
 
+// Pruebas
+function conseguirToken(){
+    return fetch('https://accounts.spotify.com/api/token', {
+        method: 'POST',
+        headers: {
+            'Content-Type' : 'application/x-www-form-urlencoded', 
+            'Authorization' : 'Basic ' + btoa(APIKeySpotifyClientID + ':' + APIKeySpotifyClientSecret)
+        },
+        body: 'grant_type=client_credentials'
+    })
+    .then((response) => response.json())
+    .then((responseData) => {
+      console.log(responseData.access_token);
+      return responseData.access_token;
+    })
+    .catch(error => console.warn(error));
+}
+// Token ejemplo
+function tests(){
+    fetch('https://accounts.spotify.com/api/token', {
+        method: 'POST',
+        headers: {
+            'Content-Type' : 'application/x-www-form-urlencoded', 
+            'Authorization' : 'Basic ' + btoa(APIKeySpotifyClientID + ':' + APIKeySpotifyClientSecret)
+        },
+        body: 'grant_type=client_credentials'
+    }).then(res=>res.json()).then(rs=> {
+        token = rs.access_token;
+        console.log(token);
+        return token;
+    });
+}
 //Conseguir URL Playlist
 function conseguirURL(){
-    const token = conseguirToken();
+    //const token = conseguirToken().then(response => response.access_token);
+    
+    //token = tests();
+    const token= '';
+    fetch('https://accounts.spotify.com/api/token', {
+            method: 'POST',
+            headers: {
+                'Content-Type' : 'application/x-www-form-urlencoded', 
+                'Authorization' : 'Basic ' + btoa(APIKeySpotifyClientID + ':' + APIKeySpotifyClientSecret)
+            },
+            body: 'grant_type=client_credentials'
+        }).then(res=>res.json()).then(rs=> {
+            token = rs.access_token;
+            console.log(rs.access_token);
+        })
+    
     fetch("https://api.spotify.com/v1/search?q="+grupo+"&type=playlist&offset=0&limit=20", {
         method: 'GET',
         headers: {'Authorization' : 'Bearer ' + token}
     })
     .then(result=>result.json()).then(dataSpotify => console.log(dataSpotify.playlists.items[0].external_urls.spotify))
 }
-
 
 
 map.on('click', onMapClick);
