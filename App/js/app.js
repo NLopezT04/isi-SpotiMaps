@@ -88,8 +88,8 @@ let ticketMasterMarker = [];
 function ticketMasterPorPais(CodigoPais) {
  
     for(var i=0; i<ticketMasterMarker.length; i++){
+        if (ticketMasterMarker[i])
         ticketMasterMarker[i].remove();
-
     }
     
     categoria = 'Music'
@@ -104,71 +104,60 @@ function ticketMasterPorPais(CodigoPais) {
                 fecha = featureCollection._embedded.events[i].dates.start.localDate || '';
                 hora = featureCollection._embedded.events[i].dates.start.localTime || '';
                 urlEntradas = featureCollection._embedded.events[i].url
+                latConcierto = featureCollection._embedded.events[i]._embedded.venues[0].location.latitude;
+                lonConcierto = featureCollection._embedded.events[i]._embedded.venues[0].location.longitude;
+
+                quitarExtras = grupo.split('|');
+                quitarExtras = quitarExtras[0].split('$');
+                quitarExtras = quitarExtras[0].split('-');
+                quitarExtras = quitarExtras[0].split(':');
+                quitarExtras = quitarExtras[0].split('.');
+                quitarExtras = quitarExtras[0].split(';');
+                grupo = quitarExtras[0];
+                console.log(grupo);
                 
-                //const token = conseguirToken().then(response => response.access_token);
-                
+                conseguirURL();
                 /*
+                token = "BQDozyvGSlmuV0kBtnB2FmN1AX-XoLftVgtC_WZq-ahXsmsf1tSiVRFb9x3LD_rqgGTSS3K-FyryNYu46_4UbVt2sJKPsDZs3pdOMRejEDlbW9egt0myeQAXSCwwPxbjegkgc4tsG42oRBruHcsi5PLaeeTtJgvf6pM";
+                console.log(token)
+    
                 fetch("https://api.spotify.com/v1/search?q="+grupo+"&type=playlist&offset=0&limit=20", {
                     method: 'GET',
-                    headers: {'Authorization' : 'Bearer ' + token}
-                })
-                .then(result=>result.json())
-                .then(dataSpotify => {
-                    console.log(dataSpotify)
+                    headers: {
+                        'Authorization' : 'Bearer ' + token
+                    }
+                }).then(result=>result.json()).then(dataSpotify => {
                     try{
                         urlPlaylist = dataSpotify.playlists.items[0].external_urls.spotify;
-                        console.log(urlPlaylist)
-                    }catch(error){
+                        console.log(urlPlaylist);
+                    }catch (error) {
                         console.error(error);
                     }
+
+                    
+                    const zooMarkerPopup = L.popup().setContent(grupo + "<br>" + ciudad + "<br>" + "Fecha: " + fecha + " | Hora: " + hora+ "<br>" + '<a href="'+urlEntradas+'" target=\"_blank\">Entradas concierto</a>'+ "<br>" + '<a href="'+urlPlaylist+'" target=\"_blank\">Playlist Spotify</a>');
+                    ticketMasterMarker[i] = L.marker(new L.LatLng((latConcierto || ''), (lonConcierto || '')), {
+                        icon: concertsIcon
+                    }).bindPopup(zooMarkerPopup).addTo(map);
                 })
-*/
-                //console.log(urlPlaylist)
-                
-                const urlPlaylist=conseguirURL();
-                console.log(urlPlaylist);
-
-
-                const zooMarkerPopup = L.popup().setContent(grupo + "<br>" + ciudad + "<br>" + "Fecha: " + fecha + " | Hora: " + hora+ "<br>" + '<a href="'+urlEntradas+'" target=\"_blank\">Entradas concierto</a>'+ "<br>" + '<a href="'+urlEntradas+'" target=\"_blank\">Playlist Spotify</a>');
+                */
+               if(urlPlaylist){
+                const zooMarkerPopup = L.popup().setContent(grupo + "<br>" + ciudad + "<br>" + "Fecha: " + fecha + " | Hora: " + hora+ "<br>" + '<a href="'+urlEntradas+'" target=\"_blank\">Entradas concierto</a>'+ "<br>" + '<a href="'+urlPlaylist+'" target=\"_blank\">Playlist Spotify</a>');
                 ticketMasterMarker[i] = L.marker(new L.LatLng((featureCollection._embedded.events[i]._embedded.venues[0].location.latitude || ''), (featureCollection._embedded.events[i]._embedded.venues[0].location.longitude || '')), {
                     icon: concertsIcon
                 }).bindPopup(zooMarkerPopup).addTo(map);
+               }else{
+                const zooMarkerPopup = L.popup().setContent(grupo + "<br>" + ciudad + "<br>" + "Fecha: " + fecha + " | Hora: " + hora+ "<br>" + '<a href="'+urlEntradas+'" target=\"_blank\">Entradas concierto</a>'+ "<br>" + "No se pudo encontrar playlist del concierto");
+                ticketMasterMarker[i] = L.marker(new L.LatLng((featureCollection._embedded.events[i]._embedded.venues[0].location.latitude || ''), (featureCollection._embedded.events[i]._embedded.venues[0].location.longitude || '')), {
+                    icon: concertsIcon
+                }).bindPopup(zooMarkerPopup).addTo(map);
+               }
+
+                
             }
         });
 }
 
-// Conseguir token spotify para las busquedas
-function conseguirToken2(){
-    let token;
-     fetch('https://accounts.spotify.com/api/token', {
-        method: 'POST',
-        headers: {
-            'Content-Type' : 'application/x-www-form-urlencoded', 
-            'Authorization' : 'Basic ' + btoa(APIKeySpotifyClientID + ':' + APIKeySpotifyClientSecret)
-        },
-        body: 'grant_type=client_credentials'
-    }).then(res=>res.json()).then(rs=> token = rs.access_token)
-    console.log(token)
-    return token;
-}
-
-// Pruebas
-function conseguirToken(){
-    return fetch('https://accounts.spotify.com/api/token', {
-        method: 'POST',
-        headers: {
-            'Content-Type' : 'application/x-www-form-urlencoded', 
-            'Authorization' : 'Basic ' + btoa(APIKeySpotifyClientID + ':' + APIKeySpotifyClientSecret)
-        },
-        body: 'grant_type=client_credentials'
-    })
-    .then((response) => response.json())
-    .then((responseData) => {
-      console.log(responseData.access_token);
-      return responseData.access_token;
-    })
-    .catch(error => console.warn(error));
-}
 // Token ejemplo
 function tests(){
     fetch('https://accounts.spotify.com/api/token', {
@@ -186,31 +175,25 @@ function tests(){
 //Conseguir URL Playlist
 function conseguirURL(){
     
-    const token = tests();
-    /*
-    const token= '';
-    fetch('https://accounts.spotify.com/api/token', {
-            method: 'POST',
-            headers: {
-                'Content-Type' : 'application/x-www-form-urlencoded', 
-                'Authorization' : 'Basic ' + btoa(APIKeySpotifyClientID + ':' + APIKeySpotifyClientSecret)
-            },
-            body: 'grant_type=client_credentials'
-        }).then(res=>res.json()).then(rs=> {
-            token = rs.access_token;
-            console.log(rs.access_token);
-        })
-        */
+    const token = tests(); //A VECES DA FALLO
+
+    //token = "BQAverTH2xTYkK2z8dIePYuy-IhBbVenVvky7U1-UuPzerXX_rvQnNGKcuzPo5DucLCHRptrZtbpy8m52rHOVWdyCIO-cLe1ijvZ-_urS-HnbnWzzKToMd61w6Kry3ynDQQV3-NXS8TSOMwEdpHlCvQJ0SnNn85pnEk";
+    console.log(token)
     
     fetch("https://api.spotify.com/v1/search?q="+grupo+"&type=playlist&offset=0&limit=20", {
         method: 'GET',
-        headers: {'Authorization' : 'Bearer ' + token}
-    })
-    .then(result=>result.json()).then(dataSpotify => {
-        concierto = dataSpotify.playlists.items[0].external_urls.spotify;
-        console.log(concierto);
-        return concierto;
-    })
+        headers: {
+            'Authorization' : 'Bearer ' + token
+        }
+    }).then(result=>result.json()).then(dataSpotify => {
+        try{
+            urlPlaylist = dataSpotify.playlists.items[0].external_urls.spotify;
+            console.log(urlPlaylist);
+            return urlPlaylist;
+        }catch (error) {
+            console.error(error);
+        }
+    });
 }
 
 
