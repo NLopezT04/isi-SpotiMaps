@@ -9,12 +9,12 @@ La información relacionada con el Sprint 1 se encuentra en el siguiente enlace
 [Repositorio Sprint 1](https://github.com/NLopezT04/isi-SpotiMaps/tree/Sprint1)
 
 ## Sprint 2
-La información relacionada con el Sprint 1 se encuentra en el siguiente enlace
+La información relacionada con el Sprint 2 se encuentra en el siguiente enlace
 
 [Repositorio Sprint 2](https://github.com/NLopezT04/isi-SpotiMaps/tree/Sprint2)
 
 ## Sprint 3
-La información relacionada con el Sprint 1 se encuentra en el siguiente enlace
+La información relacionada con el Sprint 3 se encuentra en el siguiente enlace
 
 [Repositorio Sprint 3](https://github.com/NLopezT04/isi-SpotiMaps/tree/Sprint3)
 
