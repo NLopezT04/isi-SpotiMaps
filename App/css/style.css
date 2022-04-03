@@ -11,6 +11,10 @@ body,
     flex-direction: row;
 }
 
+.popup {
+    font-size: small;
+}
+
 .results {
     padding: 10px;
     display: flex;

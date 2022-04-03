@@ -79,19 +79,20 @@ function onMapClick(e) {
                 icon: markerIcon
             }).addTo(map);
             map.setView([foundAddress.properties.lat, foundAddress.properties.lon], 7);
-            
+
             ticketMasterPorPais(foundAddress.properties.country_code);
         });
 }
 
 let ticketMasterMarker = [];
+
 function ticketMasterPorPais(CodigoPais) {
- 
-    for(var i=0; i<ticketMasterMarker.length; i++){
+
+    for (var i = 0; i < ticketMasterMarker.length; i++) {
         if (ticketMasterMarker[i])
-        ticketMasterMarker[i].remove();
+            ticketMasterMarker[i].remove();
     }
-    
+
     categoria = 'Music'
     url = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=" + APIKeyTicketMaster + "&classificationName=Music&countryCode=" + CodigoPais,
         fetch(url).then(result => result.json())
@@ -100,10 +101,11 @@ function ticketMasterPorPais(CodigoPais) {
             for (var i = 0; i < featureCollection.page.size; i++) {
                 elementid = "Concierto" + i;
                 grupo = featureCollection._embedded.events[i].name || '';
-                ciudad = featureCollection._embedded.events[i]._embedded.venues[0].city.name || '';
+                ciudad = "<h3>" + featureCollection._embedded.events[i]._embedded.venues[0].city.name || '';
                 fecha = featureCollection._embedded.events[i].dates.start.localDate || '';
                 hora = featureCollection._embedded.events[i].dates.start.localTime || '';
-                urlEntradas = featureCollection._embedded.events[i].url
+                urlEntradas = featureCollection._embedded.events[i].url;
+                urlSpotifyProvisional = 'https://open.spotify.com/search/' + grupo;
                 latConcierto = featureCollection._embedded.events[i]._embedded.venues[0].location.latitude;
                 lonConcierto = featureCollection._embedded.events[i]._embedded.venues[0].location.longitude;
 
@@ -115,7 +117,7 @@ function ticketMasterPorPais(CodigoPais) {
                 quitarExtras = quitarExtras[0].split(';');
                 grupo = quitarExtras[0];
                 console.log(grupo);
-                
+
                 conseguirURL();
                 /*
                 token = "BQDozyvGSlmuV0kBtnB2FmN1AX-XoLftVgtC_WZq-ahXsmsf1tSiVRFb9x3LD_rqgGTSS3K-FyryNYu46_4UbVt2sJKPsDZs3pdOMRejEDlbW9egt0myeQAXSCwwPxbjegkgc4tsG42oRBruHcsi5PLaeeTtJgvf6pM";
@@ -141,56 +143,56 @@ function ticketMasterPorPais(CodigoPais) {
                     }).bindPopup(zooMarkerPopup).addTo(map);
                 })
                 */
-               if(urlPlaylist){
-                const zooMarkerPopup = L.popup().setContent(grupo + "<br>" + ciudad + "<br>" + "Fecha: " + fecha + " | Hora: " + hora+ "<br>" + '<a href="'+urlEntradas+'" target=\"_blank\">Entradas concierto</a>'+ "<br>" + '<a href="'+urlPlaylist+'" target=\"_blank\">Playlist Spotify</a>');
+                /*if (urlPlaylist) {
+                    const zooMarkerPopup = L.popup().setContent(grupo + "<br>" + ciudad + "<br>" + "Fecha: " + fecha + " | Hora: " + hora + "<br>" + '<a href="' + urlEntradas + '" target=\"_blank\">Entradas concierto</a>' + "<br>" + '<a href="' + urlPlaylist + '" target=\"_blank\">Playlist Spotify</a>');
+                    ticketMasterMarker[i] = L.marker(new L.LatLng((featureCollection._embedded.events[i]._embedded.venues[0].location.latitude || ''), (featureCollection._embedded.events[i]._embedded.venues[0].location.longitude || '')), {
+                        icon: concertsIcon
+                    }).bindPopup(zooMarkerPopup).addTo(map);
+                } else {*/
+                const zooMarkerPopup = L.popup({
+                    className: 'popup',
+                }).setContent("<h1>" + grupo + "<hr>" + ciudad + "<br>" + "Fecha: " + fecha + " | Hora: " + hora + "<br>" + '<a href="' + urlEntradas + '" target=\"_blank\">Entradas concierto</a>' + "<br>" + '<a href="' + urlSpotifyProvisional + '" target=\"_blank\">Música del artista/grupo</a>');
                 ticketMasterMarker[i] = L.marker(new L.LatLng((featureCollection._embedded.events[i]._embedded.venues[0].location.latitude || ''), (featureCollection._embedded.events[i]._embedded.venues[0].location.longitude || '')), {
                     icon: concertsIcon
                 }).bindPopup(zooMarkerPopup).addTo(map);
-               }else{
-                const zooMarkerPopup = L.popup().setContent(grupo + "<br>" + ciudad + "<br>" + "Fecha: " + fecha + " | Hora: " + hora+ "<br>" + '<a href="'+urlEntradas+'" target=\"_blank\">Entradas concierto</a>'+ "<br>" + "No se pudo encontrar playlist del concierto");
-                ticketMasterMarker[i] = L.marker(new L.LatLng((featureCollection._embedded.events[i]._embedded.venues[0].location.latitude || ''), (featureCollection._embedded.events[i]._embedded.venues[0].location.longitude || '')), {
-                    icon: concertsIcon
-                }).bindPopup(zooMarkerPopup).addTo(map);
-               }
-
-                
+                //}
             }
         });
 }
 
 // Token ejemplo
-function tests(){
+function tests() {
     fetch('https://accounts.spotify.com/api/token', {
         method: 'POST',
         headers: {
-            'Content-Type' : 'application/x-www-form-urlencoded', 
-            'Authorization' : 'Basic ' + btoa(APIKeySpotifyClientID + ':' + APIKeySpotifyClientSecret)
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Basic ' + btoa(APIKeySpotifyClientID + ':' + APIKeySpotifyClientSecret)
         },
         body: 'grant_type=client_credentials'
-    }).then(res=>res.json()).then(rs=> {
+    }).then(res => res.json()).then(rs => {
         token = rs.access_token;
         return token;
     });
 }
 //Conseguir URL Playlist
-function conseguirURL(){
-    
+function conseguirURL() {
+
     const token = tests(); //A VECES DA FALLO
 
     //token = "BQAverTH2xTYkK2z8dIePYuy-IhBbVenVvky7U1-UuPzerXX_rvQnNGKcuzPo5DucLCHRptrZtbpy8m52rHOVWdyCIO-cLe1ijvZ-_urS-HnbnWzzKToMd61w6Kry3ynDQQV3-NXS8TSOMwEdpHlCvQJ0SnNn85pnEk";
     console.log(token)
-    
-    fetch("https://api.spotify.com/v1/search?q="+grupo+"&type=playlist&offset=0&limit=20", {
+
+    fetch("https://api.spotify.com/v1/search?q=" + grupo + "&type=playlist&offset=0&limit=20", {
         method: 'GET',
         headers: {
-            'Authorization' : 'Bearer ' + token
+            'Authorization': 'Bearer ' + token
         }
-    }).then(result=>result.json()).then(dataSpotify => {
-        try{
+    }).then(result => result.json()).then(dataSpotify => {
+        try {
             urlPlaylist = dataSpotify.playlists.items[0].external_urls.spotify;
             console.log(urlPlaylist);
             return urlPlaylist;
-        }catch (error) {
+        } catch (error) {
             console.error(error);
         }
     });
