@@ -16,20 +16,29 @@ body,
 }
 
 .results {
+    color: #99CC99; 
     padding: 10px;
     display: flex;
     flex-direction: column;
     min-width: 400px;
     max-width: 400px;
+    vertical-align: middle;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    
 }
 
-.results2 {
-    padding: 10px;
+.image {
+
     display: flex;
     flex-direction: column;
-    min-width: 400px;
-    max-width: 400px;
-    margin-top: 52.5%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    
 }
 
 .status {

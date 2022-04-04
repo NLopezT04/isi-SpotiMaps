@@ -24,7 +24,7 @@
     </style>
 </head>
 
-<body>
+<body onload="obtenerToken()">
     
     <div id="loader-wrapper">
         <div id="loader"></div>
@@ -63,15 +63,10 @@
     <div id="services" class="tm-section">
         <!-- Services left -->
         <div class="tm-section-col tm-content">
-            <h2 class="tm-text-primary">Our Services</h2>
-            <p>Credit goes to <strong>Pexels website</strong> for background images and Unsplash website for gallery images used in this Vertex HTML template. Vestibulum quis ultrices ipsum, tempor cursus odio. Donec et nisl sit amet mauris consequat sodales. 
-            </p>
+            <h2 class="tm-text-primary">Our Services</h2> 
             <p>
-                Morbi a sapien vitae nunc mollis efficitur quis eu purus. Donec nec orci pharetra, ullamcorper orci eu, gravida dolor. Morbi at rutrum nibh. Sed a erat vitae ipsum mollis tincidunt sed nec orci.
-            </p>
-            <div class="tm-text-right">
-                <a href="#gallery" class="tm-btn tm-btn-next">Next page</a>
-            </div>                
+                Nuesto <strong>objetivo principal</strong> es que nuestros usuarios puedan buscar conciertos y saber un poco acerca de su musica para saber si es de su gusto o no. 
+            </p>       
             <hr class="tm-hr tm-ml tm-sm-mt-30">
             <div class="tm-row">
                 <div class="tm-col">
@@ -79,7 +74,7 @@
                         <i class="fas fa-street-view fa-3x"></i>
                     </div>                        
                     <p>
-                        Fusce mi sapien, faucibus ut tortor a, tempus laoreet magna. Nulla felis ipsum, lobortis eu efficitur eget, malesuada id lacus.
+                        Busqueda en el lugar indicado de los diferentes conciertos que se encuentran en dicho país.
                     </p>
                 </div>
                 <div class="tm-col">
@@ -87,11 +82,12 @@
                         <i class="fas fa-bullseye fa-3x"></i>
                     </div>                        
                     <p>
-                        Nullam pellentesque accumsan hendrerit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+                        Obtención de los enlaces para la compra de entradas de cada concierto con sus respectivas Playlists.
                     </p>
                 </div>
             </div>                
         </div>
+        <img class="image" id="wheel" src="img/hombre.jpg" width="20%" height="20%">
     </div> <!-- #services -->
     <div id="gallery" class="tm-content tm-content-small-top">
         <div class="tm-gallery-container">
@@ -347,20 +343,24 @@
         <div class="tm-section-col tm-content tm-content-small">
             <h2 class="tm-text-primary">About Us</h2>
             <p>
-                You can find more free templates on Too CSS collections. Please visit Too CSS website to see a great list of HTML CSS templates. Simply type it in Google search.
+                Los creadores de esta pagina somos:
             </p>
             <p>
-                You may help us by spreading a word about our website or make a small contribution by contacting Tooplate directly. That will be very helpful for us. Thank you.
+                Alberto García Aparicio
+            </p>
+            <p>
+                Sandra Ciudad Moreno
+            </p>
+            <p>
+                Néstor López Torres
             </p>
             <hr class="tm-hr tm-mb-50">                
             <p class="tm-mb-50">
-                Quisque luctus feugiat dui eget malesuada. Donec rutrum, nibh vel lobortis placerat, leo enim feugiat arcu, ornare imperdiet urna sem vitae tellus.
+                Las Api utilizadas para el desarrollo de esta pagina son: Geoapify, TicketMaster y Spotify.
             </p>
-            <div class="tm-text-right tm-mb-130">
-                <a href="#contact" class="tm-btn tm-btn-next">Contact Us</a>
-            </div>                
+               
         </div>
-        
+        <img class="image" id="wheel" src="img/ticketmaster.jpeg" width="30%" height="30%">
    </div> <!-- #about -->
 
     <div id="contact" class="tm-section">
@@ -368,7 +368,7 @@
         <div class="tm-section-col tm-content tm-content-small">
             <h2 class="tm-text-primary">Contact Us</h2>
             <p>
-                Pellentesque nec dui pellentesque, fermentum turpis eu, facilisis libero. Vestibulum fringilla nulla augue, at consequat metus facilisis condimentum.
+                Si usted tiene alguna duda y quiere contactar con nosotros rellene el siguiente formulario y le llegara su respuesta entre 1-2 dias laborales.
             </p> 
             <form id="contact-form" action="" method="POST" class="tm-contact-form tm-mb-200">
                 <div class="form-group">
@@ -386,11 +386,12 @@
                 </div>
             </form>
             <footer class="tm-copyright tm-text-small">
-                Copyright 2021 Vertex Company 
+                Grupo SpotiMaps
                 
-                - Design: <a rel="nofollow" href="https://www.tooplate.com" class="tm-text-link" target="_parent">Tooplate</a>
+                - UCLM <a rel="nofollow" href="https://esi.uclm.es" class="tm-text-link" target="_parent">ESI</a>
             </footer>              
         </div>
+        <img class="image" id="wheel" src="img/EsiUclm.png" width="30%" height="30%">
 
     </section>
 
